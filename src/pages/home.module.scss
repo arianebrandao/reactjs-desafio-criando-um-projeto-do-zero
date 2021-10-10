@@ -1,1 +1,44 @@
-// TODO
+.posts { 
+  margin: 48px auto;
+
+  h1 {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 2.11rem;
+    text-align: justify;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: var(--gray-100);
+    font-size: 1.12rem;
+    line-height: 1.36rem;
+    text-align: justify;
+    margin-bottom: 24px;
+  }
+
+  .postFooter {
+    display: flex;
+
+    P {
+      display: flex;
+      align-items: center;
+
+      svg {
+        stroke: var(--white);
+        margin-right: 0.3rem;
+      }
+    }
+    
+    p + p {
+      padding-left: 2rem;
+    }
+  }
+}
+
+.section button {
+  color: var(--highlight);
+  background-color: transparent;
+  border: 0;
+}
