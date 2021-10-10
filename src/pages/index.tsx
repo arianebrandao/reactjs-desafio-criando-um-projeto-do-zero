@@ -36,17 +36,15 @@ interface HomeProps {
 }
 
 export default function Home({postsPagination}: HomeProps) {
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  //console.log(postsPagination.next_page)
+  //setPosts(postsPagination.results)
 
-  // const pages = 'https://api.github.com/orgs/rocketseat/repos';
-  // const [posts, setPosts] = useState<Post[]>([]);
-
-  // useEffect(() => {
-  //   fetch(pages)
-  //   .then(response => response.json())
-  //   .then(data => setPosts(data))
-  // }, []);
+  useEffect(() => {
+    fetch(postsPagination.next_page)
+    .then(response => response.json())
+    .then(data => setPosts(data.results))
+  }, []);
   
   return (
     <>
@@ -60,14 +58,6 @@ export default function Home({postsPagination}: HomeProps) {
         <section className={styles.section}>
           { postsPagination.next_page }
 
-        <ul>
-          {/* {
-            posts.map(post => {
-              return <li>{post.data.title}</li>
-            })
-          } */}
-        </ul>
-
           <div className={styles.posts}>
             { postsPagination.results.map(post => (
               <div key={post.uid}>
@@ -78,7 +68,6 @@ export default function Home({postsPagination}: HomeProps) {
                 </Link>
                 <p>{post.data.subtitle}</p>
                 <div className={styles.postFooter}>
-                  {/* <p><FiCalendar/><time>{post.first_publication_date}</time></p> */}
                   <p><FiCalendar/><time>{
                   format( new Date(post.first_publication_date), "d MMM yyyy",
                   {
@@ -114,10 +103,6 @@ export const getStaticProps = async () => {
   const posts = postsResponse.results.map(post => {
     return {
       uid: post.uid,
-      // first_publication_date: format( new Date(post.first_publication_date), "d MMM yyyy",
-      //   {
-      //     locale: ptBR,
-      //   }),
       first_publication_date: post.first_publication_date,
       data: {
         title: post.data.title,
