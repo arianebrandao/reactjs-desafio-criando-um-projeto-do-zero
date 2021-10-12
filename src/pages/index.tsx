@@ -13,7 +13,6 @@ import { FiCalendar, FiUser } from "react-icons/fi";
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
-import { RichText } from 'prismic-dom';
 import { useEffect, useState } from 'react';
 
 interface Post {
@@ -36,16 +35,34 @@ interface HomeProps {
 }
 
 export default function Home({postsPagination}: HomeProps) {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>(postsPagination.results);
+  const [pagination, setPagination] = useState<string>(postsPagination.next_page);
 
-  //setPosts(postsPagination.results)
+  function loadMorePosts(link: string | null){
+    if(pagination){
+      fetch(link)
+      .then(response => response.json())
+      .then(data => {
+        const newPosts = data.results.map(result => {
 
-  useEffect(() => {
-    fetch(postsPagination.next_page)
-    .then(response => response.json())
-    .then(data => setPosts(data.results))
-  }, []);
-  
+          return {
+            uid: result.uid,
+            first_publication_date: result.first_publication_date,
+            data: {
+              title: result.data.title,
+              subtitle: result.data.subtitle,
+              author: result.data. author,
+            }
+          }
+        })
+
+        setPosts([...posts, ...newPosts])
+        setPagination(data.next_page)
+      })
+    }
+
+  }
+
   return (
     <>
       <Head>
@@ -56,10 +73,9 @@ export default function Home({postsPagination}: HomeProps) {
         <Header/>
 
         <section className={styles.section}>
-          { postsPagination.next_page }
 
           <div className={styles.posts}>
-            { postsPagination.results.map(post => (
+            { posts.map(post => (
               <div key={post.uid}>
                 <Link href={`/post/${post.uid}`}>
                   <a>
@@ -74,14 +90,14 @@ export default function Home({postsPagination}: HomeProps) {
                     locale: ptBR,
                   })
                   }</time></p>
-                  
+
                   <p><FiUser/>{post.data.author}</p>
                 </div>
               </div>
             )) }
           </div>
 
-          <button type='button'>Carregar mais posts</button>
+          { pagination ? <button type='button' onClick={() => loadMorePosts(pagination)}>Carregar mais posts</button> : null }
 
         </section>
       </main>
@@ -89,7 +105,7 @@ export default function Home({postsPagination}: HomeProps) {
   )
 }
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query([
     Prismic.predicates.at('document.type', 'posts')
@@ -97,8 +113,6 @@ export const getStaticProps = async () => {
     fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
     pageSize: 1,
   });
-
-  const next_page = postsResponse.next_page;
 
   const posts = postsResponse.results.map(post => {
     return {
@@ -112,10 +126,8 @@ export const getStaticProps = async () => {
     }
   })
 
-  //console.log(JSON.stringify(postsPagination, null, 2))
-
   return {
-    props: { 
+    props: {
       postsPagination: {
         next_page: postsResponse.next_page,
         results: posts,
