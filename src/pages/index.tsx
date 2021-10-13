@@ -133,5 +133,6 @@ export const getStaticProps: GetStaticProps = async () => {
         results: posts,
       }
     },
+    revalidate: 1 * 1 * 1, // 30m = second * minute * hour
   }
 };
