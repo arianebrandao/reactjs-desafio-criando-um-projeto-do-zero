@@ -1,5 +1,15 @@
-.posts { 
-  margin: 48px auto;
+.mainContainer {
+  header {
+    //max-width: 700px;
+    height: 105px;
+    align-items: end;
+  }
+}
+
+.posts {
+  //margin: 48px auto;
+
+
 
   h1 {
     color: var(--white);
@@ -7,7 +17,7 @@
     font-size: 1.75rem;
     line-height: 2.11rem;
     text-align: justify;
-    margin-bottom: 8px;
+    margin: 3rem auto;
   }
 
   p {
@@ -27,17 +37,17 @@
 
       svg {
         stroke: var(--white);
-        margin-right: 0.3rem;
+        margin-right: 0.5rem;
       }
     }
-    
+
     p + p {
       padding-left: 2rem;
     }
   }
 }
 
-.section button {
+.loadMorePosts {
   color: var(--highlight);
   background-color: transparent;
   border: 0;

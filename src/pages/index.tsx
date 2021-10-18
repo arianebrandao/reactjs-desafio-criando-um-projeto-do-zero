@@ -69,10 +69,10 @@ export default function Home({postsPagination}: HomeProps) {
         <title>Home | spacetraveling.</title>
       </Head>
 
-      <main className={commonStyles.mainContainer}>
+      <main className={styles.mainContainer}>
         <Header/>
 
-        <section className={styles.section}>
+        <section className={commonStyles.containerContent}>
 
           <div className={styles.posts}>
             { posts.map(post => (
@@ -97,7 +97,7 @@ export default function Home({postsPagination}: HomeProps) {
             )) }
           </div>
 
-          { pagination ? <button type='button' onClick={() => loadMorePosts(pagination)}>Carregar mais posts</button> : null }
+          { pagination ? <button type='button' className={styles.loadMorePosts} onClick={() => loadMorePosts(pagination)}>Carregar mais posts</button> : null }
 
         </section>
       </main>

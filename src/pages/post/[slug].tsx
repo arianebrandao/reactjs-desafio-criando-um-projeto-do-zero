@@ -51,10 +51,10 @@ export default function Post({post}: PostProps) {
         <title>{post.data.title} | spacetraveling.</title>
       </Head>
 
-      <main className={commonStyles.mainContainer}>
+      <main className={styles.mainContainer}>
         <Header/>
 
-        <section className={styles.section}>
+        <section className={commonStyles.containerContent}>
 
           <div className={styles.post}>
             <Image src={post.data.banner.url} width={700} height={400} />
@@ -72,15 +72,16 @@ export default function Post({post}: PostProps) {
               <p><FiClock/>2 min</p>
             </div>
 
-            <h2>heading</h2>
-            <div>body</div>
-
-            {/* {post.data.content.map(content => (
-              <>
-                <h2>{content.heading}</h2>
-                <div>{content.body}</div>
-              </>
-            ))} */}
+            { post.data.content.map(post => {
+                return (
+                  <div key={post.heading} className={styles.postContent}>
+                    <h2>{post.heading}</h2>
+                    <article
+                      dangerouslySetInnerHTML={{ __html: RichText.asHtml(post.body) }}
+                    ></article>
+                  </div>
+                )
+            }) }
           </div>
 
         </section>
@@ -145,23 +146,6 @@ export const getStaticProps: GetStaticProps = async context => {
   return {
     props: {
       post: response,
-      // post: {
-      //   first_publication_date: string | null,
-      //   data: {
-      //     title: string,
-      //     banner: {
-      //       url: string,
-      //     }
-      //     author: string,
-      //     content: {
-      //       heading: string,
-      //       body: {
-      //         text: string,
-      //       }[],
-      //     }[],
-      //   }
-      // }
-
     },
     revalidate: 1 * 1 * 1, // 30m = second * minute * hour
   }

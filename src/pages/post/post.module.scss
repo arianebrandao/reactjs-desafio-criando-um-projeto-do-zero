@@ -1,5 +1,61 @@
-.section {
-  .post {
-
+.mainContainer {
+  header {
+    height: 105px;
   }
+}
+
+.post{
+  h1 {
+    font-size: 3rem;
+  }
+}
+
+.postFooter {
+  display: flex;
+  margin-top: 1.5rem;
+  color: var(--gray-100);
+  font-size: 1rem;
+
+  p {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+
+    svg {
+      stroke: var(--white);
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.postContent {
+  h2 {
+    font-size: 2.25rem;
+    color: var(--white);
+
+    margin: 4rem auto;
+  }
+
+  margin-top: 2rem;
+  line-height:  2rem;
+  font-size: 1.125rem;
+  color: var(--gray-50);
+  text-align: justify;
+
+  p, ul {
+    margin: 1.5rem 0;
+  }
+
+  ul {
+    padding-left:  1.5rem;
+
+    li {
+      margin: 0.5rem 0;
+    }
+  }
+
+  a {
+    color: var(--highlight);
+  }
+
 }
