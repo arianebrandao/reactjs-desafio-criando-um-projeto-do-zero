@@ -1,15 +1,16 @@
 .mainContainer {
   header {
-    //max-width: 700px;
     height: 105px;
     align-items: end;
   }
 }
 
-.posts {
-  //margin: 48px auto;
+.postsList {
+  margin: 1rem auto;
+}
 
-
+.post {
+  margin: 3rem auto;
 
   h1 {
     color: var(--white);
@@ -17,33 +18,32 @@
     font-size: 1.75rem;
     line-height: 2.11rem;
     text-align: justify;
-    margin: 3rem auto;
   }
 
   p {
+    margin: 0.5rem auto;
     color: var(--gray-100);
     font-size: 1.12rem;
     line-height: 1.36rem;
     text-align: justify;
-    margin-bottom: 24px;
   }
 
   .postFooter {
-    display: flex;
+    font-size: 0.93rem;
+    margin-top: 1.5rem;
+    color: var(--gray-100);
 
-    P {
-      display: flex;
-      align-items: center;
-
+    span {
       svg {
         stroke: var(--white);
         margin-right: 0.5rem;
       }
+
+      & + span {
+        margin-left: 1.5rem;
+      }
     }
 
-    p + p {
-      padding-left: 2rem;
-    }
   }
 }
 

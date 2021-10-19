@@ -4,7 +4,14 @@
   }
 }
 
+.postImage {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
 .post{
+  margin-top: 5rem;
   h1 {
     font-size: 3rem;
   }

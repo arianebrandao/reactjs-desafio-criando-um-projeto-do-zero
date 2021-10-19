@@ -39,6 +39,21 @@ interface PostProps {
 export default function Post({post}: PostProps) {
   const router = useRouter()
 
+  function readingTime(totalWords: number) {
+    const wordsPerMinute = 200;
+
+    return Math.ceil(totalWords / wordsPerMinute);
+  }
+
+  const totalString = post.data.content.reduce((accWords, postContent) => {
+    const postHeading = postContent.heading.trim().split(/\s+/).length;
+    const postBody = RichText.asText(postContent.body).trim().split(/\s+/).length;
+
+    return accWords + postHeading + postBody;
+  }, 0)
+
+  console.log(totalString);
+
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
@@ -54,10 +69,14 @@ export default function Post({post}: PostProps) {
       <main className={styles.mainContainer}>
         <Header/>
 
+        <div className={styles.postImage}>
+          <Image src={post.data.banner.url} layout='fill' />
+        </div>
+
         <section className={commonStyles.containerContent}>
 
           <div className={styles.post}>
-            <Image src={post.data.banner.url} width={700} height={400} />
+
             <h1>{post.data.title}</h1>
 
             <div className={styles.postFooter}>
@@ -69,15 +88,15 @@ export default function Post({post}: PostProps) {
                 </time>
               </p>
               <p><FiUser/>{post.data.author}</p>
-              <p><FiClock/>2 min</p>
+              <p><FiClock/>{readingTime(totalString)} min</p>
             </div>
 
-            { post.data.content.map(post => {
+            { post.data.content.map(postContent => {
                 return (
-                  <div key={post.heading} className={styles.postContent}>
-                    <h2>{post.heading}</h2>
+                  <div key={postContent.heading} className={styles.postContent}>
+                    <h2>{postContent.heading}</h2>
                     <article
-                      dangerouslySetInnerHTML={{ __html: RichText.asHtml(post.body) }}
+                      dangerouslySetInnerHTML={{ __html: RichText.asHtml(postContent.body) }}
                     ></article>
                   </div>
                 )
@@ -122,31 +141,12 @@ export const getStaticProps: GetStaticProps = async context => {
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('posts', String(slug), {});
 
-  //console.log(JSON.stringify(response.data.content.body,null,1))
-
-  // const post = {
-  //   first_publication_date: response.first_publication_date,
-  //   data: {
-  //     title: response.data.title,
-  //     banner: {
-  //       url: response.data.banner.url,
-  //     },
-  //     author: response.data.author,
-  //     content: {
-  //       // heading: response.data.content.heading,
-  //       // body: {
-  //       //   text: response.data.content.body.text,
-  //       // },
-  //     },
-  //   },
-  // }
-
   //console.log(JSON.stringify(post,null,1))
 
   return {
     props: {
       post: response,
     },
-    revalidate: 1 * 1 * 1, // 30m = second * minute * hour
+    revalidate: 60 * 60 * 24, // 24h = second * minute * hour
   }
 };
