@@ -4,10 +4,10 @@
 
 ## spacetraveling
 
-Um blog criado do zero. Esse é desafio feito durante minha jornada no [Ignite](https://www.rocketseat.com.br/ignite), da Rocketseat.
+Um blog criado do zero. Esse é um desafio feito durante minha jornada no [Ignite](https://www.rocketseat.com.br/ignite), da Rocketseat.
 
 ## App online
-(Em breve)
+Link: [desafio-prj-do-zero.vercel.app](https://desafio-prj-do-zero.vercel.app)
 
 ## Tecnologias
 
@@ -18,18 +18,15 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Prismic](https://prismic.io)
 
 ## To-do (desafios 02)
-
-- Responsividade;
-- Comentários com Utteranc;
-- Preview do documento Prismic;
-- Navegação entre post anterior e próximo;
-- Informação de edição do post.
+- [x] Responsividade;
+- [ ] Comentários com Utteranc;
+- [ ] Preview do documento Prismic;
+- [ ] Navegação entre post anterior e próximo;
+- [ ] Informação de edição do post.;
 
 ## Layout
 
 Você pode visualizar o layout do projeto através [desse link](https://www.figma.com/file/Le6SPyOsZfytC8N3yVzfFJ/Desafios-Módulo-3-ReactJS-(Copy)?node-id=0%3A1). É necessário ter conta no [Figma](http://figma.com/) para acessá-lo.
-
-Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu navegador.
 
 # Desafio: criando um projeto do zero
 
@@ -75,8 +72,7 @@ Para esse desafio, temos os seguintes testes:
 
 - Clone o repositório
 - Instale as dependências com `yarn`
-- Inicie a fake api com `yarn server`
-- Inicie o servidor com `yarn start`
+- Inicie o servidor com `yarn dev`
 
 ## Licença
 

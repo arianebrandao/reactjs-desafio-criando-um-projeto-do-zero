@@ -89,7 +89,7 @@ export default function Post({post}: PostProps) {
 
             <h1>{post.data.title}</h1>
 
-            <div className={styles.postFooter}>
+            <div className={styles.postInfo}>
               <p><FiCalendar/>
                 <time>{format(new Date(post.first_publication_date), "d MMM yyyy",
                   {

@@ -52,3 +52,9 @@
   background-color: transparent;
   border: 0;
 }
+
+@media (max-width: 720px) {
+  .mainContainer {
+    padding: 0 2rem 2rem;
+  }
+}
