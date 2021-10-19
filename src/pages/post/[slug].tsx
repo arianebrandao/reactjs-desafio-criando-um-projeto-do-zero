@@ -39,25 +39,35 @@ interface PostProps {
 export default function Post({post}: PostProps) {
   const router = useRouter()
 
-  function readingTime(totalWords: number) {
-    const wordsPerMinute = 200;
-
-    return Math.ceil(totalWords / wordsPerMinute);
-  }
-
-  const totalString = post.data.content.reduce((accWords, postContent) => {
-    const postHeading = postContent.heading.trim().split(/\s+/).length;
-    const postBody = RichText.asText(postContent.body).trim().split(/\s+/).length;
-
-    return accWords + postHeading + postBody;
-  }, 0)
-
-  console.log(totalString);
-
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
     return <div>Carregando...</div>
+  }
+
+  function readingTime() {
+    if (router.isFallback) {
+      return 0
+    }
+
+    const totalWords = post.data.content.reduce((accWords, postContent) => {
+      let postHeading = 0;
+      let postBody = 0;
+
+      if(postContent.heading){
+        postHeading = postContent.heading.trim().split(/\s+/).length;
+      }
+
+      if(RichText.asText(postContent.body)){
+        postBody = RichText.asText(postContent.body).trim().split(/\s+/).length;
+      }
+
+      return accWords + postHeading + postBody;
+    }, 0)
+
+    const wordsPerMinute = 200;
+
+    return Math.ceil(totalWords / wordsPerMinute);
   }
 
   return (
@@ -88,7 +98,7 @@ export default function Post({post}: PostProps) {
                 </time>
               </p>
               <p><FiUser/>{post.data.author}</p>
-              <p><FiClock/>{readingTime(totalString)} min</p>
+              <p><FiClock/>{readingTime()} min</p>
             </div>
 
             { post.data.content.map(postContent => {
